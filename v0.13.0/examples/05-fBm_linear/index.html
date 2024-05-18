@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Linear RODE with fractional Brownian motion · Euler method for RODEs</title><meta name="title" content="Linear RODE with fractional Brownian motion · Euler method for RODEs"/><meta property="og:title" content="Linear RODE with fractional Brownian motion · Euler method for RODEs"/><meta property="twitter:title" content="Linear RODE with fractional Brownian motion · Euler method for RODEs"/><meta name="description" content="Documentation for Euler method for RODEs."/><meta property="og:description" content="Documentation for Euler method for RODEs."/><meta property="twitter:description" content="Documentation for Euler method for RODEs."/><meta property="og:url" content="https://github.com/rmsrosa/rode_conv_em/examples/05-fBm_linear/"/><meta property="twitter:url" content="https://github.com/rmsrosa/rode_conv_em/examples/05-fBm_linear/"/><link rel="canonical" href="https://github.com/rmsrosa/rode_conv_em/examples/05-fBm_linear/"/><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.050/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../search_index.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">Euler method for RODEs</a></span></div><button class="docs-search-query input is-rounded is-small is-clickable my-2 mx-auto py-1 px-2" id="documenter-search-query">Search docs (Ctrl + /)</button><ul class="docs-menu"><li><a class="tocitem" href="../../">Overview</a></li><li><span class="tocitem">Theory</span><ul><li><a class="tocitem" href="../../theory/results/">Main results</a></li><li><a class="tocitem" href="../../theory/idea/">Main idea</a></li><li><a class="tocitem" href="../../theory/extras/">Extras</a></li></ul></li><li><span class="tocitem">Examples</span><ul><li><input class="collapse-toggle" id="menuitem-3-1" type="checkbox"/><label class="tocitem" for="menuitem-3-1"><span class="docs-label">Basic Linear RODEs</span><i class="docs-chevron"></i></label><ul class="collapsed"><li><a class="tocitem" href="../01-wiener_linearhomogeneous/">Homogenous linear RODE with a Wiener process noise coefficient</a></li><li><a class="tocitem" href="../02-wiener_linearnonhomogeneous/">Non-homogenous linear RODE with a Wiener process noise coefficient</a></li><li><a class="tocitem" href="../03-sin_gBm_linearhomogeneous/">Homogenous linear RODE with the sine of a Geometric Brownian motion coefficient</a></li></ul></li><li><a class="tocitem" href="../04-allnoises/">Linear system with all implemented noises</a></li><li class="is-active"><a class="tocitem" href>Linear RODE with fractional Brownian motion</a><ul class="internal"><li><a class="tocitem" href="#The-equation"><span>The equation</span></a></li><li><a class="tocitem" href="#Numerical-approximation"><span>Numerical approximation</span></a></li></ul></li><li><a class="tocitem" href="../06-popdyn/">Population dynamics with sin of gBm growth and step process harvest</a></li><li><a class="tocitem" href="../07-toggle_switch/">A toggle-switch model for gene expression</a></li><li><a class="tocitem" href="../08-earthquake/">Mechanical structural under random Earthquake-like seismic disturbances</a></li><li><a class="tocitem" href="../09-fisherkpp/">Random Fisher-KPP partial differential equation</a></li><li><a class="tocitem" href="../10-risk/">An actuarial risk model</a></li></ul></li><li><span class="tocitem">Noises</span><ul><li><a class="tocitem" href="../../noises/noiseintro/">Noises</a></li><li><a class="tocitem" href="../../noises/homlin/">Homogeneous linear Itô process noise</a></li><li><a class="tocitem" href="../../noises/fBm/">Simulating fractional Brownian motion</a></li><li><a class="tocitem" href="../../noises/colored/">Ornstein-Uhlenbeck colored noise approximation of white noise</a></li></ul></li><li><a class="tocitem" href="../../api/">API</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><a class="docs-sidebar-button docs-navbar-link fa-solid fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Examples</a></li><li class="is-active"><a href>Linear RODE with fractional Brownian motion</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Linear RODE with fractional Brownian motion</a></li></ul></nav><div class="docs-right"><a class="docs-navbar-link" href="https://github.com/rmsrosa/rode_conv_em" title="Edit source on GitHub"><span class="docs-icon fa-solid"></span></a><a class="docs-settings-button docs-navbar-link fa-solid fa-gear" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-article-toggle-button fa-solid fa-chevron-up" id="documenter-article-toggle-button" href="javascript:;" title="Collapse all docstrings"></a></div></header><article class="content" id="documenter-page"><h1 id="Linear-RODE-with-fractional-Brownian-motion"><a class="docs-heading-anchor" href="#Linear-RODE-with-fractional-Brownian-motion">Linear RODE with fractional Brownian motion</a><a id="Linear-RODE-with-fractional-Brownian-motion-1"></a><a class="docs-heading-anchor-permalink" href="#Linear-RODE-with-fractional-Brownian-motion" title="Permalink"></a></h1><h2 id="The-equation"><a class="docs-heading-anchor" href="#The-equation">The equation</a><a id="The-equation-1"></a><a class="docs-heading-anchor-permalink" href="#The-equation" title="Permalink"></a></h2><h2 id="Numerical-approximation"><a class="docs-heading-anchor" href="#Numerical-approximation">Numerical approximation</a><a id="Numerical-approximation-1"></a><a class="docs-heading-anchor-permalink" href="#Numerical-approximation" title="Permalink"></a></h2><h3 id="Setting-up-the-problem"><a class="docs-heading-anchor" href="#Setting-up-the-problem">Setting up the problem</a><a id="Setting-up-the-problem-1"></a><a class="docs-heading-anchor-permalink" href="#Setting-up-the-problem" title="Permalink"></a></h3><p>First we load the necessary packages</p><pre><code class="language-julia hljs">using Plots
+using Random
+using LinearAlgebra
+using Distributions
+using RODEConvergence</code></pre><p>Then we set up some variables:</p><pre><code class="language-julia hljs">rng = Xoshiro(123)
+
+f(t, x, y) = - x + y
+
+t0 = 0.0
+tf = 1.0
+
+x0law = Normal()
+
+ntgt = 2^18
+ns = 2 .^ (6:9)
+nsample = ns[[1, 2, 3, 4]]
+m = 200
+
+y0 = 0.0
+hursts = Iterators.flatten((0.1:0.1:0.5, 0.7:0.2:0.9))
+noise = FractionalBrownianMotionProcess(t0, tf, y0, first(hursts), ntgt)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">FractionalBrownianMotionProcess{AbstractFFTs.ScaledPlan{ComplexF64, FFTW.cFFTWPlan{ComplexF64, 1, false, 1, UnitRange{Int64}}, Float64}, FFTW.cFFTWPlan{ComplexF64, -1, false, 1, Tuple{Int64}}}(0.0, 1.0, 0.0, 0.1, 262144, [4.8239945e-316, 6.93639818654495e-310, 4.8239945e-316, 5.5351194e-316, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0  …  0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], ComplexF64[0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 1.03613397e-316im, 6.93639818644613e-310 + 6.93639818644613e-310im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im  …  0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im], ComplexF64[0.0 + 6.216809e-317im, 6.93639818644613e-310 + 6.33191686e-316im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im  …  0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im, 0.0 + 0.0im], 1.9073486328125e-6 * FFTW backward plan for 524288-element array of ComplexF64
+(dft-ct-dit/128
+  (dftw-genericbuf/64-128-4096
+    (dft-direct-128-x64 &quot;n1fv_128_avx2&quot;))
+  (dft-indirect-before
+    (dft-vrank&gt;=1-x128/1
+      (dft-ct-dit/8
+        (dftw-direct-8/56 &quot;t2bv_8_avx2&quot;)
+        (dft-ct-dif/8
+          (dftw-directsq-8/28-x8 &quot;q1bv_8_avx2&quot;)
+          (dft-vrank&gt;=1-x8/1
+            (dft-direct-64-x8 &quot;n1bv_64_avx2&quot;)))))
+    (dft-r2hc-1
+      (rdft-rank0-tiled/2-x4096-x128)))), FFTW forward plan for 524288-element array of ComplexF64
+(dft-ct-dit/128
+  (dftw-genericbuf/16-128-4096
+    (dft-direct-128-x16 &quot;n1fv_128_avx2&quot;))
+  (dft-indirect-before
+    (dft-vrank&gt;=1-x128/1
+      (dft-ct-dit/8
+        (dftw-direct-8/56 &quot;t2fv_8_avx2&quot;)
+        (dft-ct-dif/8
+          (dftw-directsq-8/28-x8 &quot;q1fv_8_avx2&quot;)
+          (dft-vrank&gt;=1-x8/1
+            (dft-direct-64-x8 &quot;n1fv_64_avx2&quot;)))))
+    (dft-r2hc-1
+      (rdft-rank0-tiled/2-x4096-x128)))))</code></pre><p>And add some information about the simulation:</p><pre><code class="language-julia hljs">info = (
+    equation = &quot;\$\\mathrm{d}X_t/\\mathrm{d}t = -X_t + B^H_t\$&quot;,
+    noise = &quot;fBm noise&quot;,
+    ic = &quot;\$X_0 \\sim \\mathcal{N}(0, 1)\$&quot;
+)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">(equation = &quot;\$\\mathrm{d}X_t/\\mathrm{d}t = -X_t + B^H_t\$&quot;, noise = &quot;fBm noise&quot;, ic = &quot;\$X_0 \\sim \\mathcal{N}(0, 1)\$&quot;)</code></pre><p>We define the <em>target</em> solution as the Euler approximation, which is to be computed with the target number <code>ntgt</code> of mesh points, and which is also the one we want to estimate the rate of convergence, in the coarser meshes defined by <code>ns</code>.</p><pre><code class="language-julia hljs">target = RandomEuler()
+method = RandomEuler()</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">RandomEuler{Float64, Distributions.Univariate}(Float64[])</code></pre><h3 id="Order-of-convergence"><a class="docs-heading-anchor" href="#Order-of-convergence">Order of convergence</a><a id="Order-of-convergence-1"></a><a class="docs-heading-anchor-permalink" href="#Order-of-convergence" title="Permalink"></a></h3><p>With all the parameters set up, we build the convergence suite:</p><pre><code class="language-julia hljs">allctd = @allocated suite = ConvergenceSuite(t0, tf, x0law, f, noise, target, method, ntgt, ns, m)
+
+pwr = Int(div(round(log10(allctd)), 3)) # approximate since Kb = 1024 bytes not 1000 and so on
+@info &quot;`suite` memory: $(round(allctd / 10^(3pwr), digits=2)) $((&quot;bytes&quot;, &quot;Kb&quot;, &quot;Mb&quot;, &quot;Gb&quot;, &quot;Tb&quot;)[pwr+1])&quot;</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">[ Info: `suite` memory: 5.3 Mb</code></pre><p>Then we are ready to compute the errors:</p><pre><code class="language-julia hljs">@time result = solve(rng, suite)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">  7.705346 seconds (391.10 k allocations: 24.761 MiB, 8.32% compilation time)</code></pre><p>The computed strong error for each resolution in <code>ns</code> is stored in <code>result.errors</code>, and a raw LaTeX table can be displayed for inclusion in the article:</p><pre><code class="language-julia hljs">table = generate_error_table(result, info)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">    \begin{tabular}[htb]{|r|l|l|l|}
+        \hline N &amp; dt &amp; error &amp; std err \\
+        \hline \hline
+        64 &amp; 0.0156 &amp; 0.0263 &amp; 0.00141 \\
+        128 &amp; 0.00781 &amp; 0.0157 &amp; 0.000873 \\
+        256 &amp; 0.00391 &amp; 0.0108 &amp; 0.000582 \\
+        512 &amp; 0.00195 &amp; 0.00711 &amp; 0.00038 \\
+        \hline
+    \end{tabular}
+    \bigskip
+
+    \caption{Mesh points (N), time steps (dt), strong error (error), and standard error (std err) of the Euler method for $\mathrm{d}X_t/\mathrm{d}t = -X_t + B^H_t$ for each mesh resolution $N$, with initial condition $X_0 \sim \mathcal{N}(0, 1)$ and fBm noise, on the time interval $I = [0.0, 1.0]$, based on $M = 200$ sample paths for each fixed time step, with the target solution calculated with $262144$ points. The order of strong convergence is estimated to be $p = 0.619$, with the 95\% confidence interval $[0.5584, 0.6793]$.}</code></pre><p>The calculated order of convergence is given by <code>result.p</code>:</p><pre><code class="language-julia hljs">println(&quot;Order of convergence `C Δtᵖ` with p = $(round(result.p, sigdigits=2)) and 95% confidence interval ($(round(result.pmin, sigdigits=3)), $(round(result.pmax, sigdigits=3)))&quot;)</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">Order of convergence `C Δtᵖ` with p = 0.62 and 95% confidence interval (0.558, 0.679)</code></pre><h3 id="Plots"><a class="docs-heading-anchor" href="#Plots">Plots</a><a id="Plots-1"></a><a class="docs-heading-anchor-permalink" href="#Plots" title="Permalink"></a></h3><p>We create a plot with the rate of convergence with the help of a plot recipe for <code>ConvergenceResult</code>:</p><pre><code class="language-julia hljs">plot(result)</code></pre><img src="d653bb3f.svg" alt="Example block output"/><p>For the sake of illustration, we plot a sample of an approximation of a target solution:</p><pre><code class="language-julia hljs">plot(suite, ns=nsample)</code></pre><img src="833eb167.svg" alt="Example block output"/><p>We can also visualize the noise:</p><pre><code class="language-julia hljs">plot(suite, xshow=false, yshow=true)</code></pre><img src="c7c38a67.svg" alt="Example block output"/><p>We save the order of convergence obtained</p><pre><code class="language-julia hljs">ps = [result.p]
+pmins = [result.pmin]
+pmaxs = [result.pmax]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">1-element Vector{Float64}:
+ 0.6792636273257024</code></pre><p>nothing</p><p>Now we vary the Hurst parameter and record the corresponding order of convergence.</p><pre><code class="language-julia hljs">@info &quot;h = $(first(hursts)); p = $(result.p)&quot;
+
+for h in Iterators.drop(hursts, 1)
+    loc_noise = FractionalBrownianMotionProcess(t0, tf, y0, h, ntgt)
+    loc_suite = ConvergenceSuite(t0, tf, x0law, f, loc_noise, target, method, ntgt, ns, m)
+    @time loc_result = solve(rng, loc_suite)
+    @info &quot;h = $h =&gt; p = $(loc_result.p) ($(loc_result.pmin), $(loc_result.pmax))&quot;
+    push!(ps, loc_result.p)
+    push!(pmins, loc_result.pmin)
+    push!(pmaxs, loc_result.pmax)
+end</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">[ Info: h = 0.1; p = 0.6188288458796938
+  7.082303 seconds (125 allocations: 148.672 KiB)
+[ Info: h = 0.2 =&gt; p = 0.7149014408834012 (0.6526033000609208, 0.7771042602504928)
+  7.043205 seconds (125 allocations: 148.672 KiB)
+[ Info: h = 0.3 =&gt; p = 0.8098079859441835 (0.7510776187838171, 0.8686713464274757)
+  7.057192 seconds (125 allocations: 148.672 KiB)
+[ Info: h = 0.4 =&gt; p = 0.8826026364994044 (0.822044429309841, 0.9428328068039774)
+  4.439289 seconds (125 allocations: 148.672 KiB)
+[ Info: h = 0.5 =&gt; p = 0.9974081219814975 (0.9388900371227036, 1.0558631366605609)
+  6.981353 seconds (125 allocations: 148.672 KiB)
+[ Info: h = 0.7 =&gt; p = 1.0010158744236355 (0.9456189919836304, 1.0575510108618413)
+  7.036640 seconds (125 allocations: 148.672 KiB)
+[ Info: h = 0.9 =&gt; p = 1.0019833156450015 (0.9368726687673404, 1.0670730057849822)</code></pre><p>We print them out for inclusing in the paper:</p><pre><code class="language-julia hljs">[collect(hursts) ps pmins pmaxs]</code></pre><pre class="documenter-example-output"><code class="nohighlight hljs ansi">7×4 Matrix{Float64}:
+ 0.1  0.618829  0.558371  0.679264
+ 0.2  0.714901  0.652603  0.777104
+ 0.3  0.809808  0.751078  0.868671
+ 0.4  0.882603  0.822044  0.942833
+ 0.5  0.997408  0.93889   1.05586
+ 0.7  1.00102   0.945619  1.05755
+ 0.9  1.00198   0.936873  1.06707</code></pre><p>The following plot helps visualizing the result.</p><pre><code class="language-julia hljs">plt = plot(ylims=(-0.1, 1.2), xaxis=&quot;H&quot;, yaxis=&quot;p&quot;, guidefont=10)
+scatter!(plt, collect(hursts), ps, yerror=(ps .- pmins, pmaxs .- ps), label=&quot;computed&quot;)
+plot!(plt, 0.0:0.01:1.0, p -&gt; min(p + 0.5, 1.0), linestyle=:dash, label=&quot;expected&quot;)</code></pre><img src="9404c5aa.svg" alt="Example block output"/><p>Strong order <span>$p$</span> of convergence of the Euler method for <span>$\mathrm{d}X_t/\mathrm{d}t = - Y_t^H X_t$</span> with a fractional Brownian motion process <span>$\{Y_t^H\}_t$</span> for various values of the Hurst parameter <span>$H$</span> (scattered dots: computed values; dashed line: expected <span>$p = H + 1/2$</span>).</p><hr/><p><em>This page was generated using <a href="https://github.com/fredrikekre/Literate.jl">Literate.jl</a>.</em></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../04-allnoises/">« Linear system with all implemented noises</a><a class="docs-footer-nextpage" href="../06-popdyn/">Population dynamics with sin of gBm growth and step process harvest »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="auto">Automatic (OS)</option><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 1.4.1 on <span class="colophon-date" title="Saturday 18 May 2024 23:12">Saturday 18 May 2024</span>. Using Julia version 1.10.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
